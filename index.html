@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>leafLet加载几种地图</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+   <!--下面的地址根据你的实际项目地址进行引用-->
+    <script src="./leaflet.js"></script>
+	<style>
+		html,body{
+			width:100%;
+			height:100%
+		}
+		#map{
+			width:100%;
+			height:100%
+		}
+	</style>
+</head>
+<body>
+<div id="map">
+</div>
+<script>
+    /**
+     * 智图地图内容
+     */
+    var normalm1 = L.tileLayer.chinaProvider('Geoq.Normal.Map', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var normalm2 = L.tileLayer.chinaProvider('Geoq.Normal.Color', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var normalm3 = L.tileLayer.chinaProvider('Geoq.Normal.PurplishBlue', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var normalm4 = L.tileLayer.chinaProvider('Geoq.Normal.Gray', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var normalm5 = L.tileLayer.chinaProvider('Geoq.Normal.Warm', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var normalm6 = L.tileLayer.chinaProvider('Geoq.Normal.Cold', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    /**
+     * 天地图内容
+     */
+    var normalm = L.tileLayer.chinaProvider('TianDiTu.Normal.Map', {
+            maxZoom: 18,
+            minZoom: 5
+        }),
+        normala = L.tileLayer.chinaProvider('TianDiTu.Normal.Annotion', {
+            maxZoom: 18,
+            minZoom: 5
+        }),
+        imgm = L.tileLayer.chinaProvider('TianDiTu.Satellite.Map', {
+            maxZoom: 18,
+            minZoom: 5
+        }),
+        imga = L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion', {
+            maxZoom: 18,
+            minZoom: 5
+        });
+ 
+    var normal = L.layerGroup([normalm, normala]),
+        image = L.layerGroup([imgm, imga]);
+    /**
+     * 谷歌
+     */
+    var normalMap = L.tileLayer.chinaProvider('Google.Normal.Map', {
+            maxZoom: 18,
+            minZoom: 5
+        }),
+        satelliteMap = L.tileLayer.chinaProvider('Google.Satellite.Map', {
+            maxZoom: 18,
+            minZoom: 5
+        });
+    /**
+     * 高德地图
+     */
+    var Gaode = L.tileLayer.chinaProvider('GaoDe.Normal.Map', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var Gaodimgem = L.tileLayer.chinaProvider('GaoDe.Satellite.Map', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var Gaodimga = L.tileLayer.chinaProvider('GaoDe.Satellite.Annotion', {
+        maxZoom: 18,
+        minZoom: 5
+    });
+    var Gaodimage = L.layerGroup([Gaodimgem, Gaodimga]);
+
+ 
+ 
+ 
+    var baseLayers = {
+        "智图地图": normalm1,
+        "智图多彩": normalm2,
+        "智图午夜蓝": normalm3,
+        "智图灰色": normalm4,
+        "智图暖色": normalm5,
+        "智图冷色": normalm6,
+        "天地图": normal,
+        "天地图影像": image,
+        "谷歌地图": normalMap,
+        "谷歌影像": satelliteMap,
+        "高德地图": Gaode,
+        "高德影像": Gaodimage,
+ 
+    }
+ 
+    var map = L.map("map", {
+        center: [34.31251, 108.977284],
+        zoom: 12,
+        layers: [normalm1],
+        zoomControl: false
+    });
+ 
+    L.control.layers(baseLayers, null).addTo(map);
+    L.control.zoom({
+        zoomInTitle: '放大',
+        zoomOutTitle: '缩小'
+    }).addTo(map);
+
+
+	// 覆盖物
+
+	var myIcon = L.icon({
+		iconUrl: './st.png',
+		iconSize: [20, 20],
+		iconAnchor: [22, 94],
+		popupAnchor: [-3, -76],
+		tooltipAnchor:[34.42,108.97]
+	});
+	L.marker([34.31251, 108.977284], {icon: myIcon}).addTo(map);
+
+	// 折线
+	var latlngs2 = [
+        [108.945082,34.381686], //北客站
+		[108.951478,34.368294], //北苑
+		[108.954137,34.358639],//运动公园
+		[108.953633,34.347314],//行政中心
+		[108.953741,34.336077],//凤城五路
+		[108.953741,34.336077],//市图书馆
+		[108.953741,34.336077],//大明宫西
+		[108.953526,34.287444],//安远门
+		[108.953598,34.27611],//北大街
+		[108.953598,34.267757],//钟楼
+		[108.953346,34.25454],//永宁门
+		[108.95331,34.246453],//南稍门
+		[108.953274,34.238694],//体育场
+		[108.953274,34.228995],//小寨
+		[108.953095,34.218727],//纬一街
+		[108.953741,34.204427],//会展中心
+		[108.952196,34.189468],//三爻
+		[108.951585,34.175522],//凤栖原
+		[108.951082,34.164321],//航天城
+		[108.951999,34.148503],//韦曲南
+		[108.948783,34.140026],//樊川公园
+		[108.948783,34.140026],//何家营
+        [108.94545,34.129041]//排华学院
+		
+	];
+    // 杨家庄站；环园中路站；团结村站；
+    // 红旗站；学府路站；东风路站；
+    // 未央湖站；杏渭路站；水流路站；
+    // 泾渭站；绳刘村站；桑家村站；
+    // 泾环北路站；榆楚西站；榆楚站；
+    // 杏王村站；水景公园站。
+    var latlng10 = [
+        [108.990874,34.323272], // 杨家庄站
+        [108.990756,34.33558], //环园中路站
+        [108.9908,34.346191], //团结村站
+        [108.990836,34.352956],
+        [108.988177,34.355281],
+      
+        [108.988123,34.360094], //红旗站
+        // [], //学府路
+        [108.988106,34.379886], //西安工大武德路
+        [108.988285,34.388634], //
+        [108.990315,34.391925], //
+        [108.988671,34.398099], //东风路站
+        [108.987414,34.409655], //
+        [108.989354,34.411829], //
+        [108.999397,34.413348], //未央湖站
+        [109.036495,34.419323], //杏渭路站
+        [109.04458,34.422137], //
+        [109.045927,34.423775], //
+        [109.046125,34.425293], //
+        [109.044113,34.438156], //
+        [109.044095,34.438186], //水流路站
+        [109.043574,34.446938], //
+        [109.043861,34.455154], //泾渭站
+        [109.042891,34.476717], //绳刘村站
+        [109.041382,34.496384], //桑家村站
+        [109.040412,34.510009], //
+        [109.044598,34.510322], //泾环北路站
+        [109.068654,34.512508], //榆楚西站
+        [109.089513,34.514129], //榆楚站
+        [109.110479,34.515438], //杏王村站
+        [109.11251,34.515631], //
+        [109.116462,34.518843], //
+        [109.11639,34.53129]  // 水景公园站
+    ];
+    // 电子城、电子正街、东仪路、会展中心、
+    // 雁塔南路、曲江池西、曲江池·寒窑、芙蓉东路、
+    // 雁翔路、新植物园、长鸣路、东月路、等驾坡、
+    // 万寿南路、韩森路、万寿路、王家坟、苏王村、
+    // 广泰门、堡子村、杨家庄、余家寨、贞观路、
+    // 市图书馆、明光路、范家村、红庙坡、大白杨 、
+    // 小白杨、丰禾路、开远门、土门 、新桃园、延平门、
+    // 高新一中、科技六路、科技八路。
+    var latlng8 = [
+        // [108.977979,34.323358],//余家寨
+        [108.990874,34.323272],//杨家庄
+        [108.966759,34.324162],//贞观路
+        [108.953689,34.32414],//市图书馆
+        [108.936253,34.323864],//明光路
+        [108.928995,34.323358],//
+        [108.929426,34.306362],//范家村
+        [108.928761,34.294419],//红庙坡
+        [108.92859,34.290795],// 老城根
+        [108.92859,34.290795],// 大白杨
+        [108.913822,34.287738],
+        [108.913822,34.287738],
+        [108.913822,34.287738],//小白杨
+        [108.899737,34.292085],//
+        [108.897967,34.290653],//
+        [108.897931,34.288618],//丰禾路
+        [108.897967,34.286336],//
+        [108.897428,34.283995],//
+        [108.897806,34.281698],//
+        [108.897841,34.275001],//开远门
+        [108.896278,34.270497],//
+        [108.896251,34.265082],//土门
+        [108.896278,34.24292],//延平门
+        [108.896269,34.231318],//高新一中
+        [108.896305,34.217435],//木塔寺
+        [108.896198,34.210755],//省体育馆
+        [108.897024,34.204183],//
+        [108.926161,34.204221],//电子正街
+        [108.934964,34.2044],//东仪路
+        [108.953756,34.20431],//会展中心
+        [108.962991,34.204355],//
+        [108.970501,34.203161],//雁塔南路
+        [108.98137,34.203773],//曲江池西
+        [108.988395,34.203803],//
+        [108.992761,34.206176],//
+        [108.992761,34.206176],//芙蓉东路
+        [109.008553,34.205937],//
+        [109.010422,34.207027],//
+        [109.011338,34.21149],//
+        [109.013997,34.212953],//
+        [109.018327,34.213356],//雁翔路
+        [109.032017,34.216058],//新植物园
+        [109.037874,34.220983],//
+        [109.034604,34.225281],//马腾空
+        [109.022728,34.240174],//
+        [109.022728,34.240174],//寿南路
+        [109.02271,34.264612],//韩森路
+        [109.022728,34.275277],//万寿路
+        [109.022728,34.285255],//王家坟
+        [109.022082,34.30719],//苏王村
+        [109.021093,34.316523],//广泰门
+        [109.021058,34.322903],//
+        [109.009739,34.322992],//堡子村
+        [108.990856,34.32329],//杨家庄
+    ]
+  
+     latlngs2 = handerData(latlngs2);
+     latlngs10 = handerData(latlng10);
+     latlngs8 = handerData(latlng8);
+    
+
+ 	L.polyline(latlngs2, {color: 'red'}).addTo(map);
+ 	L.polyline(latlngs10, {color: 'green'}).addTo(map);
+ 	L.polyline(latlngs8, {color: 'blue'}).addTo(map);
+
+
+
+
+
+     function handerData(arr){
+        return arr.map(ele=>{
+            ele[0] = ele[0] - 0.0065;
+            ele[1] = ele[1] - 0.0065;
+            return [ele[1],ele[0]]
+        })
+    }
+
+
+</script>
+</body>
+</html>
